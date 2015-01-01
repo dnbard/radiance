@@ -1,8 +1,13 @@
 <html>
-    <head></head>
+    <head>
+        <link href="styles/main.css" rel="stylesheet" />
+    </head>
     <body>
-        111
-
+        <div class="page" data-id="mainmenu" data-bind="with: getPageById($element)">
+    <!-- ko if: visible -->
+    111
+    <!-- /ko -->
+</div>
 
         <script data-main="scripts/app.js" src="bower_components/requirejs/require.js"></script>
     </body>

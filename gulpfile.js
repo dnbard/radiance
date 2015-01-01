@@ -76,7 +76,15 @@ gulp.task('styles', function() {
 
 gulp.task('scripts', function() {
     rjs({
-        baseUrl: 'src/scripts/app.js',
-        out: 'app.js'
+        baseUrl: 'app/scripts/',
+        out: 'app.js',
+        paths:{
+            q: '../bower_components/q/q',
+            pubsub: '../bower_components/pubsub-js/src/pubsub',
+            ko: '../bower_components/knockout/dist/knockout',
+            jquery: '../bower_components/jquery/dist/jquery',
+            lodash: '../bower_components/lodash/dist/lodash'
+        },
+        name: 'app'
     }).pipe(gulp.dest('dist/scripts/'));
 });
