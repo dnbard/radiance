@@ -4,14 +4,16 @@ define([
     'pubsub',
     'enums/pages',
     'enums/events',
-    'viewmodels/pages/mainmenu'
-], function(ko, _, pubsub, Pages, Events, MainMenu){
+    'viewmodels/pages/mainmenu',
+    'viewmodels/pages/phaser'
+], function(ko, _, pubsub, Pages, Events, MainMenu, Phaser){
     function ApplicationViewmodel(){
         this.pages = {};
         this.pages[Pages.MAINMENU] = new MainMenu();
+        this.pages[Pages.PHASER] = new Phaser();
 
         pubsub.subscribe(Events.GAME.START, function(){
-            pubsub.publish(Events.PAGE.CHANGED, null);
+            pubsub.publish(Events.PAGE.CHANGED, Pages.PHASER);
         });
 
         pubsub.publish(Events.PAGE.CHANGED, Pages.MAINMENU);

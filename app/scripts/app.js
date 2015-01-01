@@ -5,7 +5,13 @@ requirejs.config({
         pubsub: '../bower_components/pubsub-js/src/pubsub',
         ko: '../bower_components/knockout/dist/knockout',
         jquery: '../bower_components/jquery/dist/jquery',
-        lodash: '../bower_components/lodash/dist/lodash'
+        lodash: '../bower_components/lodash/dist/lodash',
+        phaser: '../bower_components/phaser/build/phaser'
+    },
+    shim:{
+        phaser:{
+            exports: 'Phaser'
+        }
     }
 });
 
