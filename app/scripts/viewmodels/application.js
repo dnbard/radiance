@@ -4,19 +4,17 @@ define([
     'pubsub',
     'enums/pages',
     'enums/events',
-    'models/page'
-], function(ko, _, pubsub, Pages, Events, Page){
+    'viewmodels/pages/mainmenu'
+], function(ko, _, pubsub, Pages, Events, MainMenu){
     function ApplicationViewmodel(){
         this.pages = {};
+        this.pages[Pages.MAINMENU] = new MainMenu();
 
-        _.each(Pages, function(pageId){
-            var pageEntity = new Page($('.page[data-id="' + pageId +'"]'));
-            this.pages[pageId] = pageEntity;
-        }, this);
+        pubsub.subscribe(Events.GAME.START, function(){
+            pubsub.publish(Events.PAGE.CHANGED, null);
+        });
 
-        setTimeout(function(){
-            pubsub.publish(Events.PAGE.CHANGED, Pages.MAINMENU);
-        }, 1000);
+        pubsub.publish(Events.PAGE.CHANGED, Pages.MAINMENU);
     }
 
     ApplicationViewmodel.prototype.getPageById = function(element){
