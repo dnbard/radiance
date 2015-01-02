@@ -25,6 +25,7 @@ define([
         this.blueprint = null;
         this.default = options.default || {};
         this.custom = options.custom || null;
+        this.name = options.name;
 
         if (typeof options !== 'object'){
             throw new Error('Options should be an object');
@@ -37,8 +38,10 @@ define([
             presets: options.presets || null
         }
 
-        this.create = function(options){
-            var entity = {},
+        this.create = function(options, customName){
+            var entity = {
+                    type: this.name + (customName ? ('.' + customName) : '')
+                },
                 assign = _.extend(this.default, options);
 
             _.each(this.blueprint.extend, function(extenderName){
@@ -51,7 +54,8 @@ define([
                 if (extender.type === Extenders.GETSET){
                     Object.defineProperty(entity, extender.name, {
                         get: extender.get,
-                        set: extender.set
+                        set: extender.set,
+                        enumerable: true
                     });
                 } else if (extender.type === Extenders.FUNCTION) {
                     extender.handler(entity, extender);
@@ -71,7 +75,7 @@ define([
                     throw new Error('Property ' + methodName + ' already existing');
                 }
 
-                entity.prototype[methodName] = methods[methodName];
+                entity[methodName] = methods[methodName];
             }, this);
 
             _.each(assign, function(a, prop){
@@ -85,7 +89,7 @@ define([
 
         _.each(this.custom, function(defValue, defName){
             this[defName] = function(){
-                return this.create(defValue);
+                return this.create(defValue, defName);
             }
         }, this);
     }
