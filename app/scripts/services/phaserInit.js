@@ -1,6 +1,10 @@
-define([], function(){
+define([
+    'factory/tile'
+], function(Tiles){
     function PhaserInit(game){
         game.world.setBounds(0, 0, 1920, 1200);
+
+        var a = Tiles.create();
 
         /*var w = 39, h = 25;
         var dm = new ROT.Map.DividedMaze(w, h);
