@@ -19,7 +19,8 @@ define([
         }
     */
     var methods = {},
-        extenders = {};
+        extenders = {},
+        presets = {};
 
     function Factory(options){
         this.blueprint = null;
@@ -36,15 +37,10 @@ define([
             extend: options.extend || null,
             methods: options.methods || null,
             presets: options.presets || null
-        }
+        };
 
         this.create = function(options, customName){
-            var entity = {
-                    type: this.name + (customName ? ('.' + customName) : '')
-                },
-                assign = _.extend(this.default, options);
-
-            _.each(this.blueprint.extend, function(extenderName){
+            function applyExtender(extenderName){
                 var extender = extenders[extenderName];
 
                 if (!extender){
@@ -60,13 +56,13 @@ define([
                 } else if (extender.type === Extenders.FUNCTION) {
                     extender.handler(entity, extender);
                 }
-            });
+            }
 
-            _.each(this.blueprint.props, function(propName){
+            function applyProp(propName){
                 entity[propName] = this.default[propName] || null;
-            }, this);
+            }
 
-            _.each(this.blueprint.methods, function(methodName){
+            function applyMethod(methodName){
                 if (typeof methods[methodName] !== 'function'){
                     throw new Error('Method ' + methodName + ' not found');
                 }
@@ -76,15 +72,42 @@ define([
                 }
 
                 entity[methodName] = methods[methodName];
-            }, this);
+            }
+
+            var entity = {
+                    type: this.name + (customName ? ('.' + customName) : '')
+                },
+                assign = _.extend(this.default, options);
+
+            _.each(this.blueprint.presets, function(presetName){
+                var preset = presets[presetName];
+
+                if (!preset){
+                    throw new Error('Preset ' + presetName + ' not found');
+                }
+
+                if (typeof preset.props === 'object'){
+                    _.each(preset.props, applyProp, this);
+                }
+
+                if (typeof preset.methods === 'object'){
+                    _.each(preset.methods, applyMethod, this);
+                }
+
+                if (typeof preset.extend === 'object'){
+                    _.each(preset.extend, applyExtender, this);
+                }
+            });
+
+            _.each(this.blueprint.extend, applyExtender, this);
+            _.each(this.blueprint.props, applyProp, this);
+            _.each(this.blueprint.methods, applyMethod, this);
 
             _.each(assign, function(a, prop){
                 entity[prop] = a;
             });
 
-            Objects.set(entity);
-
-            return entity;
+            return Objects.set(entity);
         }
 
         _.each(this.custom, function(defValue, defName){
@@ -106,6 +129,14 @@ define([
         methods[name] = handler;
     }
 
+    function registerPreset(name, preset){
+        if (presets[name] !== undefined){
+            throw new Error('Preset ' + name + ' is already defined');
+        }
+
+        presets[name] = preset;
+    }
+
     function registerExtender(name, extender){
         if (extenders[name] !== undefined){
             throw new Error('Extender ' + name + ' is already initialized');
@@ -117,7 +148,7 @@ define([
     return {
         create: createFactory,
         registerMethod: registerMethod,
-        registerPreset: undefined,
+        registerPreset: registerPreset,
         registerExtender: registerExtender
     }
 });

@@ -8,6 +8,8 @@ define([
         set: function(obj){
             obj.id = nextId++;
             container[obj.id];
+
+            return obj;
         },
         get: function(id){
             return container[id];

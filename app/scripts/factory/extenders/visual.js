@@ -54,4 +54,8 @@ define([
             }
         }
     });
+
+    factory.registerPreset('sprite', {
+        extend: [ 'phaser-sprite', 'sprite_x', 'sprite_y', 'texture' ]
+    });
 });

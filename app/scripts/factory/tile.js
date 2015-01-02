@@ -7,7 +7,7 @@ define([
 ], function(_, factory){
     return factory.create({
         name: 'tile',
-        extend: ['phaser-sprite', 'sprite_x', 'sprite_y', 'texture'],
+        presets: ['sprite'],
         default: {
             x: 32,
             y: 32
