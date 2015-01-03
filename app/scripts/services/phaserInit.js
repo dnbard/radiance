@@ -4,8 +4,7 @@ define([
     function PhaserInit(game){
         game.world.setBounds(0, 0, 1920, 1200);
 
-        var a = Tiles.create();
-        console.log(JSON.stringify(a));
+        window.lava = Tiles.lava();
 
         /*var w = 39, h = 25;
         var dm = new ROT.Map.DividedMaze(w, h);

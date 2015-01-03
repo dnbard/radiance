@@ -34,7 +34,7 @@ define([
             var game = _.first(Phaser.GAMES);
 
             Object.defineProperty(entity, extender.name, {
-                value: game.add.sprite(0, 0, null),
+                value: game.add.sprite(0, 0),
                 enumerable: false
             });
         },
@@ -47,9 +47,9 @@ define([
         set: function(val){
             if (this.sprite){
                 if (typeof val === 'string'){
-                    this.sprite = PIXI.TextureCache[val];
+                    this.sprite.setTexture(PIXI.TextureCache[val]);
                 } else if (typeof val === 'object'){
-                    this.sprite = val;
+                    this.sprite.setTexture(val);
                 }
             }
         }

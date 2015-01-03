@@ -11,6 +11,14 @@ define([
         default: {
             x: 32,
             y: 32
+        },
+        custom:{
+            lava:{
+                texture: 'lava'
+            },
+            flagstone:{
+                texture: 'flagstone'
+            }
         }
     });
 });
