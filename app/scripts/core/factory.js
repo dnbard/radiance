@@ -48,11 +48,19 @@ define([
                 }
 
                 if (extender.type === Extenders.GETSET){
-                    Object.defineProperty(entity, extender.name, {
-                        get: extender.get,
-                        set: extender.set,
+                    var props = {
                         enumerable: true
-                    });
+                    };
+
+                    if (extender.get){
+                        props.get = extender.get;
+                    }
+
+                    if (extender.set){
+                        props.set = extender.set;
+                    }
+
+                    Object.defineProperty(entity, extender.name, props);
                 } else if (extender.type === Extenders.FUNCTION) {
                     extender.handler(entity, extender);
                 }
