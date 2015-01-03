@@ -2,6 +2,22 @@ define([
     'core/factory',
     'enums/extenders'
 ], function(factory, Extenders){
+    factory.registerExtender('sprite_gridX', {
+        get: function(){
+            return Math.round(this.x / 32);
+        },
+        name: 'gridX',
+        type: Extenders.GETSET
+    });
+
+    factory.registerExtender('sprite_gridY', {
+        get: function(){
+            return Math.round(this.y / 32);
+        },
+        name: 'gridY',
+        type: Extenders.GETSET
+    });
+
     factory.registerExtender('sprite_x', {
         get: function(){
             return this.sprite ? this.sprite.position.x : null
@@ -56,6 +72,6 @@ define([
     });
 
     factory.registerPreset('sprite', {
-        extend: [ 'phaser-sprite', 'sprite_x', 'sprite_y', 'texture' ]
+        extend: [ 'phaser-sprite', 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'texture' ]
     });
 });

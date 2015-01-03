@@ -9,8 +9,8 @@ define([
         name: 'tile',
         presets: ['sprite'],
         default: {
-            x: 32,
-            y: 32
+            x: 0,
+            y: 0
         },
         custom:{
             lava:{
