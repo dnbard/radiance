@@ -1,6 +1,7 @@
 define([
-    'factory/tile'
-], function(Tiles){
+    'factory/tile',
+    'rot'
+], function(Tiles, rot){
     function PhaserInit(game){
         game.world.setBounds(0, 0, 1920, 1200);
 
