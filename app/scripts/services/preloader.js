@@ -1,7 +1,11 @@
-define([], function(){
+define([
+    'lodash',
+    'config/preload'
+], function(_, preloadConfig){
     function Preloader(game){
-        //game.load.image('flagstone', 'assets/images/flagstone.png');
-        //game.load.image('lava', 'assets/images/lava.png');
+        _.each(preloadConfig.images, function(image){
+            game.load.image(image.name, image.path);
+        });
     }
 
     return Preloader;
