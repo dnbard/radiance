@@ -4,6 +4,7 @@ define({
     },
     GAME: {
         ALL: 'game',
-        START: 'game.start'
+        START: 'game.start',
+        STATE_CHANGED: 'game.state'
     }
 });

@@ -1,9 +1,13 @@
 define([
     'enums/pages',
-    'enums/events'
-], function(Pages, Events){
+    'enums/events',
+    'enums/extenders',
+    'enums/gameState'
+], function(Pages, Events, Extenders, GameState){
     return {
-        pages: Pages,
-        events: Events
+        Pages: Pages,
+        Events: Events,
+        Extenders: Extenders,
+        GameState: GameState
     };
 });
