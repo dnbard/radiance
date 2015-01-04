@@ -17,15 +17,14 @@ define([
                 return;
             }
 
-            var level = Levels.create();
-
-            var w = 39, h = 25;
+            var level = Levels.create(),
+                w = 39, h = 25,
+                dm = new rot.Map.DividedMaze(w, h),
+                elementsNumber = w * h;
 
             game.world.setBounds(0, 0, w * 32, h * 32);
-
-            var dm = new rot.Map.DividedMaze(w, h);
             dm.create(function(x, y, value){
-                var tile = value ? Tiles.lava() : Tiles.flagstone();
+                var tile = value ? Tiles.mountain() : Tiles.flagstone();
                 tile.x = 32 * x;
                 tile.y = 32 * y;
 

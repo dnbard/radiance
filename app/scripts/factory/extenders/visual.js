@@ -44,29 +44,24 @@ define([
         type: Extenders.GETSET
     });
 
-    factory.registerExtender('phaser-sprite', {
-        type: Extenders.FUNCTION,
-        handler: function(entity, extender){
-            var game = _.first(Phaser.GAMES);
-
-            Object.defineProperty(entity, extender.name, {
-                value: game.add.sprite(0, 0),
-                enumerable: false
-            });
-        },
-        name: 'sprite'
-    });
-
     factory.registerExtender('texture', {
         type: Extenders.GETSET,
         name: 'texture',
         set: function(val){
             if (this.sprite){
-                if (typeof val === 'string'){
+                /*if (typeof val === 'string'){
                     this.sprite.setTexture(PIXI.TextureCache[val]);
                 } else if (typeof val === 'object'){
                     this.sprite.setTexture(val);
-                }
+                }*/
+                throw new Error('Texture swapping are not implemented yet');
+            } else {
+                var game = _.first(Phaser.GAMES);
+
+                Object.defineProperty(this, 'sprite', {
+                    value: game.add.sprite(this.x || 0, this.y || 0, val, this.frame || 0),
+                    enumerable: false
+                });
             }
         }
     });

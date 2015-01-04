@@ -13,11 +13,13 @@ define([
             y: 0
         },
         custom:{
-            lava:{
-                texture: 'lava'
-            },
             flagstone:{
-                texture: 'flagstone'
+                texture: 'flagstone',
+                passable: true
+            },
+            mountain:{
+                texture: 'mountain',
+                passable: false
             }
         }
     });

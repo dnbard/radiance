@@ -1,0 +1,16 @@
+center     - 0  : 0
+right      - 32 : 0
+left       - 64 : 0
+left0      - 96 : 0
+right0     - 128: 0
+down       - 0  : 32
+right-down - 32 : 32
+left-down  - 64 : 32
+up-down    - 96 : 32
+left-right - 128: 32
+left-up    - 0  : 64
+right-up   - 32 : 64
+down0      - 64 : 64
+center0    - 96 : 64
+up         - 0  : 96
+down0      - 64 : 96
