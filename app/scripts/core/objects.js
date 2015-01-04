@@ -7,7 +7,7 @@ define([
     return {
         set: function(obj){
             obj.id = nextId++;
-            container[obj.id];
+            container[obj.id] = obj;
 
             return obj;
         },
