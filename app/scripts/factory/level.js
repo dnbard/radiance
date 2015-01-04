@@ -1,8 +1,9 @@
 define([
     'lodash',
     'core/factory',
-    'enums/extenders'
-], function(_, factory){
+    'generators/level',
+    'core/objects'
+], function(_, factory, generators, Objects){
     factory.registerMethod('addTile', function(data){
         if (!this.tiles){
             this.tiles = {};
@@ -12,23 +13,33 @@ define([
     });
 
     factory.registerMethod('getTile', function(x, y){
-        var tile;
+        var tileId;
 
         if (!this.tiles){
             this.tiles = {};
         }
 
-        tile = this.tiles[this.getTileLocation(x, y)];
+        tileId = this.tiles[this.getTileLocation(x, y)];
 
-        if (!tile){
-            throw new Error('Tile x:' + x + ' y:' + y + ' not found');
+        if (!tileId){
+            return null;
         }
 
-        return tile;
+        return Objects.get(tileId);
     });
 
     factory.registerMethod('getTileLocation', function(x, y){
         return x + ',' + y;
+    });
+
+    factory.registerMethod('generate', function(data){
+        var generator = generators[this.generator];
+
+        if (!generator){
+            throw new Error('Generator ' + this.generator + ' not found');
+        }
+
+        _.bind(generator, this)(data);
     });
 
     factory.registerMethod('getTilePosition', function(){
@@ -51,8 +62,13 @@ define([
 
     return factory.create({
         name: 'level',
-        methods: ['addTile', 'getTile', 'getTileLocation', 'getTilePosition'],
+        methods: ['addTile', 'getTile', 'getTileLocation', 'getTilePosition', 'generate'],
         presets: [],
-        default: {}
+        default: {},
+        custom:{
+            basic:{
+                generator: 'basic'
+            }
+        }
     });
 });
