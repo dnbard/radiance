@@ -67,6 +67,6 @@ define([
     });
 
     factory.registerPreset('sprite', {
-        extend: [ 'phaser-sprite', 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'texture' ]
+        extend: [ 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'texture' ]
     });
 });
