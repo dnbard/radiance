@@ -24,7 +24,7 @@ define([
             game.world.setBounds(0, 0, w * 32, h * 32);
         }
 
-        map.create(i ? null : function(x, y, value){
+        map.create(function(x, y, value){
             if (x === 0 || y === 0 || x === w-1 || y === h-1){
                 value = 1;
             };
