@@ -80,6 +80,10 @@ define([
                 var game = _.first(Phaser.GAMES),
                     sprite = game.add.sprite(this.x || 0, this.y || 0, val, this.frame || 0);
                 sprite.__type = Sprites.FLOOR;
+                sprite.anchor = {
+                    x: 0.5,
+                    y: 0.5
+                };
 
                 Object.defineProperty(this, 'sprite', {
                     value: [ sprite ],
