@@ -54,7 +54,9 @@ define([
             });
 
             if (tilesMapTransform[result] !== undefined){
-                tile.sprite.frame = tilesMapTransform[result];
+                _.find(tile.sprite, function(sprite){
+                    return sprite.__type === enums.Sprites.FLOOR;
+                }).frame = tilesMapTransform[result];
             } else {
                 //for debug purposes
                 console.log('x: %s, y: %s [%s]', tile.gridX, tile.gridY, result);

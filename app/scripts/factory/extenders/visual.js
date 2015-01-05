@@ -1,7 +1,9 @@
 define([
+    'lodash',
     'core/factory',
-    'enums/extenders'
-], function(factory, Extenders){
+    'enums/extenders',
+    'enums/sprites'
+], function(_, factory, Extenders, Sprites){
     factory.registerExtender('sprite_gridX', {
         get: function(){
             return Math.round(this.x / 32);
@@ -20,10 +22,22 @@ define([
 
     factory.registerExtender('sprite_x', {
         get: function(){
-            return this.sprite ? this.sprite.position.x : null
+            if (!this.sprite){
+                return null;
+            }
+
+            return _.isArray(this.sprite) ? this.sprite[0].position.x : this.sprite.position.x;
         },
         set: function(val){
-            if (this.sprite){
+            if (!this.sprite){
+                return null;
+            }
+
+            if (_.isArray(this.sprite)){
+                _.each(this.sprite, function(sprite){
+                    sprite.position.x = val;
+                });
+            } else {
                 this.sprite.position.x = val;
             }
         },
@@ -33,10 +47,22 @@ define([
 
     factory.registerExtender('sprite_y', {
         get: function(){
-            return this.sprite ? this.sprite.position.y : null
+            if (!this.sprite){
+                return null;
+            }
+
+            return _.isArray(this.sprite) ? this.sprite[0].position.y : this.sprite.position.y;
         },
         set: function(val){
-            if (this.sprite){
+            if (!this.sprite){
+                return null;
+            }
+
+            if (_.isArray(this.sprite)){
+                _.each(this.sprite, function(sprite){
+                    sprite.position.y = val;
+                });
+            } else {
                 this.sprite.position.y = val;
             }
         },
@@ -49,17 +75,14 @@ define([
         name: 'texture',
         set: function(val){
             if (this.sprite){
-                /*if (typeof val === 'string'){
-                    this.sprite.setTexture(PIXI.TextureCache[val]);
-                } else if (typeof val === 'object'){
-                    this.sprite.setTexture(val);
-                }*/
                 throw new Error('Texture swapping are not implemented yet');
             } else {
-                var game = _.first(Phaser.GAMES);
+                var game = _.first(Phaser.GAMES),
+                    sprite = game.add.sprite(this.x || 0, this.y || 0, val, this.frame || 0);
+                sprite.__type = Sprites.FLOOR;
 
                 Object.defineProperty(this, 'sprite', {
-                    value: game.add.sprite(this.x || 0, this.y || 0, val, this.frame || 0),
+                    value: [ sprite ],
                     enumerable: false
                 });
             }
