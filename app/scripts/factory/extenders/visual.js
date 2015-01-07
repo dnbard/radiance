@@ -6,7 +6,7 @@ define([
 ], function(_, factory, Extenders, Sprites){
     factory.registerExtender('sprite_gridX', {
         get: function(){
-            return Math.round(this.x / 32);
+            return Math.round(this.x / 48);
         },
         name: 'gridX',
         type: Extenders.GETSET
@@ -14,7 +14,7 @@ define([
 
     factory.registerExtender('sprite_gridY', {
         get: function(){
-            return Math.round(this.y / 32);
+            return Math.round(this.y / 48);
         },
         name: 'gridY',
         type: Extenders.GETSET

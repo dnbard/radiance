@@ -19,9 +19,15 @@ define([
 
             Levels.basic()
                 .generate({
-                    width: 32,
-                    height: 32
+                    width: 100,
+                    height: 100
                 });
+
+            var knight = game.add.sprite(480,480, 'knight');
+            knight.anchor = {
+                x: 0.5,
+                y: 1.0
+            }
         });
     }
 

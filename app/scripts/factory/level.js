@@ -54,8 +54,8 @@ define([
             };
         } else if (arguments.length === 2){
             return {
-                x: arguments[0] * 32,
-                y: arguments[1] * 32
+                x: arguments[0] * 48,
+                y: arguments[1] * 48
             }
         }
     });

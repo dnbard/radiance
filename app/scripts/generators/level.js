@@ -21,7 +21,7 @@ define([
             tilesCreated = 0;
 
         if (data.isCurrent !== false){
-            game.world.setBounds(0, 0, w * 32, h * 32);
+            game.world.setBounds(0, 0, w * 48, h * 48);
         }
 
         map.create(function(x, y, value){
@@ -30,8 +30,8 @@ define([
             };
 
             var tile = value ? Tiles.mountain() : Tiles.flagstone();
-            tile.x = 32 * x;
-            tile.y = 32 * y;
+            tile.x = 48 * x;
+            tile.y = 48 * y;
 
             level.addTile(tile);
 
