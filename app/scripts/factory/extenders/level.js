@@ -36,6 +36,9 @@ define([
     factory.registerMethod('generate', function(data){
         var generator = generators[this.generator];
 
+        this.width = data.width;
+        this.height = data.height;
+
         if (!generator){
             throw new Error('Generator ' + this.generator + ' not found');
         }
@@ -69,5 +72,26 @@ define([
         }
 
         this.playerId = player.id;
+    });
+
+    factory.registerMethod('getPassableTile', function(){
+        var width = this.width,
+            height = this.height,
+            isTilePassable = false,
+            tile = null,
+            x, y;
+
+        while(isTilePassable === false){
+            x = Math.round(Math.random() * width);
+            y = Math.round(Math.random() * height);
+
+            tile = this.getTile(x, y);
+            isTilePassable = tile ? tile.passable : false;
+        }
+
+        return {
+            x: x,
+            y: y
+        };
     });
 });

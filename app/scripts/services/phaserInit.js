@@ -21,7 +21,13 @@ define([
                     width: 100,
                     height: 100
                 }),
-                player = Player.create();
+                playerPosition = level.getPassableTile();
+                player = Player.create({
+                    x: playerPosition.x * 48,
+                    y: playerPosition.y * 48
+                });
+
+            console.log(playerPosition);
 
             level.setPlayer(player);
         });
