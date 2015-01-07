@@ -124,7 +124,7 @@ define([
 
                 _.each(level._highTiles, function(tileId){
                     var tile = Objects.get(tileId);
-                    tile.alpha = 0.2;
+                    tile.alpha = config.tileVisitedAlpha;
                 });
 
                 level._highTiles = [];
@@ -132,7 +132,7 @@ define([
                 fov.compute(data.x || player.gridX, data.y || player.gridY, 10, function(x, y, r, visibility) {
                     var level = Objects.get(levelId),
                         tile = level.getTile(x, y);
-                    tile.alpha = visibility > 0 ? 1 : 0.2;
+                    tile.alpha = visibility > config.tileUnseenAlpha ? config.tileSightAlpha : config.tileVisitedAlpha;
 
                     level._highTiles.push(tile.id);
                 });

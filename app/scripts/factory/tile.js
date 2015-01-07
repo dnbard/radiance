@@ -1,10 +1,9 @@
 define([
-    'lodash',
     'core/factory',
-    'enums/extenders',
+    'config/general',
 
     'factory/extenders/visual'
-], function(_, factory){
+], function(factory, config){
     return factory.create({
         name: 'tile',
         presets: ['sprite'],
@@ -16,12 +15,12 @@ define([
             flagstone:{
                 texture: 'flagstone',
                 passable: true,
-                alpha: 0
+                alpha: config.tileUnseenAlpha
             },
             mountain:{
                 texture: 'mountain',
                 passable: false,
-                alpha: 0
+                alpha: config.tileUnseenAlpha
             }
         }
     });
