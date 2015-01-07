@@ -9,8 +9,6 @@ define([
         game.world.setBounds(0, 0, 1920, 1200);
         gameState.value = enums.GameState.INITIALIZED;
 
-        //cursors = game.input.keyboard.createCursorKeys();
-
         pubsub.subscribe(enums.Events.GAME.STATE_CHANGED, function(event, state){
             if (state !== enums.GameState.STARTED){
                 return;

@@ -87,6 +87,8 @@ define([
                 },
                 assign = _.extend(this.default, options);
 
+            Objects.set(entity);
+
             _.each(this.blueprint.presets, function(presetName){
                 var preset = presets[presetName];
 
@@ -115,7 +117,7 @@ define([
                 entity[prop] = a;
             });
 
-            return Objects.set(entity);
+            return entity;
         }
 
         _.each(this.custom, function(defValue, defName){

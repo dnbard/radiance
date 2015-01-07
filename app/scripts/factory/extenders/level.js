@@ -72,6 +72,7 @@ define([
         }
 
         this.playerId = player.id;
+        player.levelId = this.id;
     });
 
     factory.registerMethod('getPassableTile', function(){

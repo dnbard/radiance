@@ -125,6 +125,6 @@ define([
     });
 
     factory.registerPreset('player', {
-        extend: [ 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'player-texture' ]
+        extend: [ 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'player-texture', 'player-keyboard']
     });
 });

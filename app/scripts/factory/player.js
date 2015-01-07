@@ -3,7 +3,8 @@ define([
     'core/factory',
     'enums/extenders',
 
-    'factory/extenders/visual'
+    'factory/extenders/visual',
+    'factory/extenders/keyboard'
 ], function(_, factory){
     return factory.create({
         name: 'player',

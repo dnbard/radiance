@@ -3,13 +3,15 @@ define([
     'enums/events',
     'enums/extenders',
     'enums/gameState',
-    'enums/sprites'
-], function(Pages, Events, Extenders, GameState, Sprites){
+    'enums/sprites',
+    'enums/keyboardActions'
+], function(Pages, Events, Extenders, GameState, Sprites, KeyboardActions){
     return {
         Pages: Pages,
         Events: Events,
         Extenders: Extenders,
         GameState: GameState,
-        Sprites: Sprites
+        Sprites: Sprites,
+        KeyboardActions: KeyboardActions
     };
 });
