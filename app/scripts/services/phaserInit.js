@@ -1,11 +1,10 @@
 define([
-    'factory/tile',
     'factory/level',
-    'rot',
+    'factory/player',
     'helpers/gameState',
     'enums',
     'pubsub'
-], function(Tiles, Levels, rot, gameState, enums, pubsub){
+], function(Levels, Player, gameState, enums, pubsub){
     function PhaserInit(game){
         game.world.setBounds(0, 0, 1920, 1200);
         gameState.value = enums.GameState.INITIALIZED;
@@ -23,11 +22,7 @@ define([
                     height: 100
                 });
 
-            var knight = game.add.sprite(480,480, 'knight');
-            knight.anchor = {
-                x: 0.5,
-                y: 1.0
-            }
+            var knight = Player.create();
         });
     }
 
