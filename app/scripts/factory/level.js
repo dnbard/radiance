@@ -9,7 +9,7 @@ define([
             'addTile', 'getTile', 'getTileLocation', 'getTilePosition', 'generate', 'setPlayer',
                  'getPassableTile'
         ],
-        presets: [],
+        extend: ['events-level'],
         default: {},
         custom:{
             basic:{

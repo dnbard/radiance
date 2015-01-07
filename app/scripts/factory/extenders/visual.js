@@ -173,8 +173,34 @@ define([
         }
     });
 
+    factory.registerExtender('sprite-alpha', {
+        type: Extenders.GETSET,
+        name: 'alpha',
+        get: function(){
+            if (!this.sprite){
+                return this._alpha || null;
+            }
+
+            return _.isArray(this.sprite) ? this.sprite[0].alpha : this.sprite.alpha;
+        },
+        set: function(val){
+            if (!this.sprite){
+                this._alpha = val;
+                return;
+            }
+
+            if (_.isArray(this.sprite)){
+                _.each(this.sprite, function(sprite){
+                    sprite.alpha = val;
+                });
+            } else {
+                this.sprite.alpha = val;
+            }
+        },
+    });
+
     factory.registerPreset('sprite', {
-        extend: [ 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'texture' ]
+        extend: [ 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'texture', 'sprite-alpha' ]
     });
 
     factory.registerPreset('player', {

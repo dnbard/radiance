@@ -10,5 +10,9 @@ define({
     LEVEL:{
         ALL: 'level',
         CREATED: 'level.created'
+    },
+    PLAYER:{
+        ALL: 'player',
+        MOVED: 'player.moved'
     }
 });

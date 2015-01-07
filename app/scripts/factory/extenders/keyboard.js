@@ -6,8 +6,9 @@ define([
     'services/camera',
     'enums',
     'phaser',
-    'config/general'
-], function(_, factory, Objects, KeyboardService, CameraService, enums, Phaser, config){
+    'config/general',
+    'pubsub'
+], function(_, factory, Objects, KeyboardService, CameraService, enums, Phaser, config, pubsub){
     factory.registerExtender('player-keyboard', {
         handler: function(player){
             var keyboardService = KeyboardService.create(),
@@ -21,8 +22,12 @@ define([
 
                 if (tile && tile.passable){
                     player.y = (player.gridY - 1) * config.tileHeight;
+                    pubsub.publish(enums.Events.PLAYER.MOVED,{
+                        playerId: player.id,
+                        x: player.gridX,
+                        y: player.gridY - 1
+                    });
                 }
-                camera.set(player);
             }, enums.KeyboardActions.DOWN, context);
 
             keyboardService.subscribe(Phaser.Keyboard.DOWN, function(){
@@ -33,8 +38,12 @@ define([
 
                 if (tile && tile.passable){
                     player.y = (player.gridY + 1) * config.tileHeight;
+                    pubsub.publish(enums.Events.PLAYER.MOVED,{
+                        playerId: player.id,
+                        x: player.gridX,
+                        y: player.gridY + 1
+                    });
                 }
-                camera.set(player);
             }, enums.KeyboardActions.DOWN, context);
 
             keyboardService.subscribe(Phaser.Keyboard.LEFT, function(){
@@ -45,8 +54,12 @@ define([
 
                 if (tile && tile.passable){
                     player.x = (player.gridX - 1) * config.tileWidth;
+                    pubsub.publish(enums.Events.PLAYER.MOVED,{
+                        playerId: player.id,
+                        x: player.gridX - 1,
+                        y: player.gridY
+                    });
                 }
-                camera.set(player);
             }, enums.KeyboardActions.DOWN, context);
 
             keyboardService.subscribe(Phaser.Keyboard.RIGHT, function(){
@@ -57,8 +70,12 @@ define([
 
                 if (tile && tile.passable){
                     player.x = (player.gridX + 1) * config.tileWidth;
+                    pubsub.publish(enums.Events.PLAYER.MOVED,{
+                        playerId: player.id,
+                        x: player.gridX + 1,
+                        y: player.gridY
+                    });
                 }
-                camera.set(player);
             }, enums.KeyboardActions.DOWN, context);
 
         },

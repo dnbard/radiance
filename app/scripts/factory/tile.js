@@ -15,11 +15,13 @@ define([
         custom:{
             flagstone:{
                 texture: 'flagstone',
-                passable: true
+                passable: true,
+                alpha: 0
             },
             mountain:{
                 texture: 'mountain',
-                passable: false
+                passable: false,
+                alpha: 0
             }
         }
     });

@@ -3,8 +3,11 @@ define([
     'core/factory',
     'generators/level',
     'core/objects',
-    'config/general'
-], function(_, factory, generators, Objects, config){
+    'config/general',
+    'enums',
+    'rot',
+    'pubsub'
+], function(_, factory, generators, Objects, config, enums, rot, pubsub){
     factory.registerMethod('addTile', function(data){
         if (!this.tiles){
             this.tiles = {};
@@ -94,5 +97,46 @@ define([
             x: x,
             y: y
         };
+    });
+
+    factory.registerExtender('events-level', {
+        type: enums.Extenders.FUNCTION,
+        handler: function(level){
+            var levelId = level.id;
+
+            var lightPasses = function(x, y) {
+                var level = Objects.get(levelId),
+                    key = level.getTileLocation(x, y),
+                    tile;
+
+                if (key in level.tiles){
+                    tile = Objects.get(level.tiles[key]);
+                    return !!tile.passable;
+                }
+
+                return false;
+            }
+
+            var fov = new ROT.FOV.PreciseShadowcasting(lightPasses);
+
+            pubsub.subscribe(enums.Events.PLAYER.MOVED, function(event, data){
+                var player = Objects.get(data.playerId);
+
+                _.each(level._highTiles, function(tileId){
+                    var tile = Objects.get(tileId);
+                    tile.alpha = 0;
+                });
+
+                level._highTiles = [];
+
+                fov.compute(data.x, data.y, 10, function(x, y, r, visibility) {
+                    var level = Objects.get(levelId),
+                        tile = level.getTile(x, y);
+                    tile.alpha = visibility > 0 ? 1 : 0;
+
+                    level._highTiles.push(tile.id);
+                });
+            });
+        }
     });
 });
