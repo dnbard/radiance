@@ -118,25 +118,28 @@ define([
             }
 
             var fov = new ROT.FOV.PreciseShadowcasting(lightPasses);
-
-            pubsub.subscribe(enums.Events.PLAYER.MOVED, function(event, data){
-                var player = Objects.get(data.playerId);
+            var shadowcastingCallback = function(event, data){
+                var level = Objects.get(levelId),
+                    player = Objects.get(level.playerId);
 
                 _.each(level._highTiles, function(tileId){
                     var tile = Objects.get(tileId);
-                    tile.alpha = 0;
+                    tile.alpha = 0.2;
                 });
 
                 level._highTiles = [];
 
-                fov.compute(data.x, data.y, 10, function(x, y, r, visibility) {
+                fov.compute(data.x || player.gridX, data.y || player.gridY, 10, function(x, y, r, visibility) {
                     var level = Objects.get(levelId),
                         tile = level.getTile(x, y);
-                    tile.alpha = visibility > 0 ? 1 : 0;
+                    tile.alpha = visibility > 0 ? 1 : 0.2;
 
                     level._highTiles.push(tile.id);
                 });
-            });
+            }
+
+            pubsub.subscribe(enums.Events.PLAYER.MOVED, shadowcastingCallback);
+            pubsub.subscribe(enums.Events.LEVEL.CREATED, shadowcastingCallback);
         }
     });
 });
