@@ -161,7 +161,7 @@ define([
                 sprite.__type = Sprites.CREATURE;
                 sprite.anchor = {
                     x: 0.5,
-                    y: 1
+                    y: 0.75
                 };
                 sprite.position.z = 10;
 
@@ -191,10 +191,18 @@ define([
 
             if (_.isArray(this.sprite)){
                 _.each(this.sprite, function(sprite){
-                    sprite.alpha = val;
+                    if (val === 0){
+                        sprite.alpha = val;
+                    } else {
+                        _.first(phaser.GAMES).add.tween(sprite).to( { alpha: val }, 250, Phaser.Easing.Quadratic.In, true);
+                    }
                 });
             } else {
-                this.sprite.alpha = val;
+                if (val === 0){
+                    this.sprite.alpha = val;
+                } else {
+                    _.first(phaser.GAMES).add.tween(this.sprite).to( { alpha: val }, 250, Phaser.Easing.Quadratic.In, true);
+                }
             }
         },
     });
