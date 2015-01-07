@@ -3,8 +3,9 @@ define([
     'factory/player',
     'helpers/gameState',
     'enums',
-    'pubsub'
-], function(Levels, Player, gameState, enums, pubsub){
+    'pubsub',
+    'services/camera'
+], function(Levels, Player, gameState, enums, pubsub, CameraService){
     function PhaserInit(game){
         game.world.setBounds(0, 0, 1920, 1200);
         gameState.value = enums.GameState.INITIALIZED;
@@ -19,14 +20,15 @@ define([
                     width: 100,
                     height: 100
                 }),
-                playerPosition = level.getPassableTile();
-                player = Player.create({
-                    x: playerPosition.x * 48,
-                    y: playerPosition.y * 48
-                });
+                playerPosition = level.getPassableTile(),
+                camera = CameraService.create();;
 
-            console.log(playerPosition);
+            player = Player.create({
+                x: playerPosition.x * 48,
+                y: playerPosition.y * 48
+            });
 
+            camera.follow(player);
             level.setPlayer(player);
         });
     }

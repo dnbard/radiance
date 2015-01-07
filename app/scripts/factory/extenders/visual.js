@@ -3,8 +3,9 @@ define([
     'core/factory',
     'enums/extenders',
     'enums/sprites',
-    'config/general'
-], function(_, factory, Extenders, Sprites, config){
+    'config/general',
+    'phaser'
+], function(_, factory, Extenders, Sprites, config, phaser){
     factory.registerExtender('sprite_gridX', {
         get: function(){
             return Math.round(this.x / config.tileWidth);
@@ -44,6 +45,58 @@ define([
             }
         },
         name: 'x',
+        type: Extenders.GETSET
+    });
+
+    factory.registerExtender('player_x', {
+        get: function(){
+            if (!this.sprite){
+                return this._x || null;
+            }
+
+            return _.isArray(this.sprite) ? this.sprite[0].position.x : this.sprite.position.x;
+        },
+        set: function(val){
+            if (!this.sprite){
+                this._x = val;
+                return;
+            }
+
+            if (_.isArray(this.sprite)){
+                _.each(this.sprite, function(sprite){
+                    _.first(phaser.GAMES).add.tween(sprite).to( { x: val }, 250, Phaser.Easing.Quadratic.In, true);
+                });
+            } else {
+                _.first(phaser.GAMES).add.tween(this.sprite).to( { x: val }, 250, Phaser.Easing.Quadratic.In, true);
+            }
+        },
+        name: 'x',
+        type: Extenders.GETSET
+    });
+
+    factory.registerExtender('player_y', {
+        get: function(){
+            if (!this.sprite){
+                return this._y || null;
+            }
+
+            return _.isArray(this.sprite) ? this.sprite[0].position.y : this.sprite.position.y;
+        },
+        set: function(val){
+            if (!this.sprite){
+                this._y = val;
+                return;
+            }
+
+            if (_.isArray(this.sprite)){
+                _.each(this.sprite, function(sprite){
+                    _.first(phaser.GAMES).add.tween(sprite).to( { y: val }, 250, Phaser.Easing.Quadratic.In, true);
+                });
+            } else {
+                _.first(phaser.GAMES).add.tween(this.sprite).to( { y: val }, 250, Phaser.Easing.Quadratic.In, true);
+            }
+        },
+        name: 'y',
         type: Extenders.GETSET
     });
 
@@ -125,6 +178,6 @@ define([
     });
 
     factory.registerPreset('player', {
-        extend: [ 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'player-texture', 'player-keyboard']
+        extend: [ 'player_x', 'player_y', 'sprite_gridX', 'sprite_gridY', 'player-texture', 'player-keyboard']
     });
 });
