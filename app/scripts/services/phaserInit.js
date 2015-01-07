@@ -16,13 +16,14 @@ define([
                 return;
             }
 
-            Levels.basic()
+            var level = Levels.basic()
                 .generate({
                     width: 100,
                     height: 100
-                });
+                }),
+                player = Player.create();
 
-            var knight = Player.create();
+            level.setPlayer(player);
         });
     }
 

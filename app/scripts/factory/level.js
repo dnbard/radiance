@@ -5,7 +5,7 @@ define([
 ], function(factory){
     return factory.create({
         name: 'level',
-        methods: ['addTile', 'getTile', 'getTileLocation', 'getTilePosition', 'generate'],
+        methods: ['addTile', 'getTile', 'getTileLocation', 'getTilePosition', 'generate', 'setPlayer'],
         presets: [],
         default: {},
         custom:{

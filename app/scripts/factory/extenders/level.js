@@ -41,6 +41,8 @@ define([
         }
 
         _.bind(generator, this)(data);
+
+        return this;
     });
 
     factory.registerMethod('getTilePosition', function(){
@@ -59,5 +61,13 @@ define([
                 y: arguments[1] * config.tileHeight
             }
         }
+    });
+
+    factory.registerMethod('setPlayer', function(player){
+        if (typeof player !== 'object' || !player.id){
+            throw new Error('Invalid argument: player');
+        }
+
+        this.playerId = player.id;
     });
 });
