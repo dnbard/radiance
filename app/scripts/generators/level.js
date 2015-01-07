@@ -5,9 +5,10 @@ define([
     'factory/tile',
     'pubsub',
     'enums',
+    'config/general',
 
     'formaters/levelTiles'
-], function(_, rot, phaser, Tiles, pubsub, enums){
+], function(_, rot, phaser, Tiles, pubsub, enums, config){
     var generators = {};
 
     generators.basic = function(data){
@@ -21,7 +22,7 @@ define([
             tilesCreated = 0;
 
         if (data.isCurrent !== false){
-            game.world.setBounds(0, 0, w * 48, h * 48);
+            game.world.setBounds(0, 0, w * config.tileWidth, h * config.tileHeight);
         }
 
         map.create(function(x, y, value){
@@ -30,8 +31,8 @@ define([
             };
 
             var tile = value ? Tiles.mountain() : Tiles.flagstone();
-            tile.x = 48 * x;
-            tile.y = 48 * y;
+            tile.x = config.tileWidth * x;
+            tile.y = config.tileHeight * y;
 
             level.addTile(tile);
 

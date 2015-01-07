@@ -2,8 +2,9 @@ define([
     'lodash',
     'core/factory',
     'generators/level',
-    'core/objects'
-], function(_, factory, generators, Objects){
+    'core/objects',
+    'config/general'
+], function(_, factory, generators, Objects, config){
     factory.registerMethod('addTile', function(data){
         if (!this.tiles){
             this.tiles = {};
@@ -54,8 +55,8 @@ define([
             };
         } else if (arguments.length === 2){
             return {
-                x: arguments[0] * 48,
-                y: arguments[1] * 48
+                x: arguments[0] * config.tileWidth,
+                y: arguments[1] * config.tileHeight
             }
         }
     });

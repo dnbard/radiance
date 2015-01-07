@@ -2,11 +2,12 @@ define([
     'lodash',
     'core/factory',
     'enums/extenders',
-    'enums/sprites'
-], function(_, factory, Extenders, Sprites){
+    'enums/sprites',
+    'config/general'
+], function(_, factory, Extenders, Sprites, config){
     factory.registerExtender('sprite_gridX', {
         get: function(){
-            return Math.round(this.x / 48);
+            return Math.round(this.x / config.tileWidth);
         },
         name: 'gridX',
         type: Extenders.GETSET
@@ -14,7 +15,7 @@ define([
 
     factory.registerExtender('sprite_gridY', {
         get: function(){
-            return Math.round(this.y / 48);
+            return Math.round(this.y / config.tileHeight);
         },
         name: 'gridY',
         type: Extenders.GETSET
