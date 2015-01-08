@@ -8,6 +8,14 @@ define([
     'rot',
     'pubsub'
 ], function(_, factory, generators, Objects, config, enums, rot, pubsub){
+    factory.registerMethod('isTilePassable', function(tile){
+        if (!tile || !tile.passable){
+            return enums.ActionResult.HALT;
+        }
+
+        return enums.ActionResult.MOVEMENT;
+    });
+
     factory.registerMethod('addTile', function(data){
         if (!this.tiles){
             this.tiles = {};
@@ -76,6 +84,18 @@ define([
 
         this.playerId = player.id;
         player.levelId = this.id;
+    });
+
+    factory.registerMethod('addNPC', function(npc){
+        if (typeof npc !== 'object' || !npc.id){
+            throw new Error('Invalid argument: npc');
+        }
+
+        if (!this.npcs){
+            this.npcs = [];
+        }
+
+        this.npcs.push(npc.id);
     });
 
     factory.registerMethod('getPassableTile', function(){

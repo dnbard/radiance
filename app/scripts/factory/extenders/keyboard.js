@@ -3,12 +3,11 @@ define([
     'core/factory',
     'core/objects',
     'services/keyboard',
-    'services/camera',
     'enums',
     'phaser',
     'config/general',
     'pubsub'
-], function(_, factory, Objects, KeyboardService, CameraService, enums, Phaser, config, pubsub){
+], function(_, factory, Objects, KeyboardService, enums, Phaser, config, pubsub){
 
     factory.registerExtender('player-keyboard', {
         handler: function(player){
@@ -17,9 +16,9 @@ define([
                     var player = Objects.get(this.id),
                         level = Objects.get(player.levelId),
                         tile = level.getTile(player.gridX + x, player.gridY + y),
-                        camera = CameraService.create();
+                        actionResult = level.isTilePassable(tile);
 
-                    if (tile && tile.passable){
+                    if (actionResult === enums.ActionResult.MOVEMENT){
                         player.x = (player.gridX + x) * config.tileWidth;
                         player.y = (player.gridY + y) * config.tileHeight;
                         pubsub.publish(enums.Events.PLAYER.MOVED,{

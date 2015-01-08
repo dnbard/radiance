@@ -6,8 +6,8 @@ define([
     return factory.create({
         name: 'level',
         methods: [
-            'addTile', 'getTile', 'getTileLocation', 'getTilePosition', 'generate', 'setPlayer',
-                 'getPassableTile'
+            'addTile', 'addNPC', 'getTile', 'getTileLocation', 'getTilePosition', 'generate', 'setPlayer',
+                 'getPassableTile', 'isTilePassable'
         ],
         extend: ['events-level'],
         default: {},
