@@ -12,6 +12,9 @@ define([
         },{
             type: enums.Sprites.CREATURE,
             z: 10
+        },{
+            type: enums.Sprites.SHADOW,
+            z: 100
         }],
         groups = {},
         initialized = false;

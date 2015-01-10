@@ -9,18 +9,21 @@ define([
         presets: ['sprite'],
         default: {
             x: 0,
-            y: 0
+            y: 0,
+            renderable: false
         },
         custom:{
             flagstone:{
                 texture: 'flagstone',
                 passable: true,
-                alpha: config.tileUnseenAlpha
+                alpha: config.tileUnseenAlpha,
+                renderable: false
             },
             mountain:{
                 texture: 'mountain',
                 passable: false,
-                alpha: config.tileUnseenAlpha
+                alpha: config.tileUnseenAlpha,
+                renderable: false
             }
         }
     });

@@ -21,6 +21,11 @@ define([
             path: 'images/players.png',
             width: 64,
             height: 64
+        },{
+            name: 'fog',
+            path: 'images/tiles/fog.png',
+            width: config.tileWidth,
+            height: config.tileHeight
         }]
     }
 });

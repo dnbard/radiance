@@ -1,5 +1,6 @@
 define({
     FLOOR: 'floor',
     CREATURE: 'creature',
-    DOODAD: 'doodad'
+    DOODAD: 'doodad',
+    SHADOW: 'shadow'
 });

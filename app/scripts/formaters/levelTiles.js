@@ -63,4 +63,9 @@ define([
             }
         });
     });
+
+    return{
+        tilesMapTransform: tilesMapTransform,
+        tilesMapMorph: tilesMapMorph
+    };
 });

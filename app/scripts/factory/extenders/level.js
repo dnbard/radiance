@@ -6,8 +6,9 @@ define([
     'config/general',
     'enums',
     'rot',
-    'pubsub'
-], function(_, factory, generators, Objects, config, enums, rot, pubsub){
+    'pubsub',
+    'helpers/shadowTiles'
+], function(_, factory, generators, Objects, config, enums, rot, pubsub, shadowTiles){
     factory.registerMethod('isTilePassable', function(tile){
         if (!tile || !tile.passable){
             return enums.ActionResult.HALT;
@@ -142,19 +143,35 @@ define([
                 var level = Objects.get(levelId),
                     player = Objects.get(level.playerId);
 
+                shadowTiles.remove(level._highTiles || []);
                 _.each(level._highTiles, function(tileId){
                     var tile = Objects.get(tileId);
                     tile.alpha = config.tileVisitedAlpha;
+                    tile.renderable = false;
                 });
 
                 level._highTiles = [];
+                level._shadows = false;
 
                 fov.compute(data.x || player.gridX, data.y || player.gridY, 10, function(x, y, r, visibility) {
                     var level = Objects.get(levelId),
                         tile = level.getTile(x, y);
-                    tile.alpha = visibility > config.tileUnseenAlpha ? config.tileSightAlpha : config.tileVisitedAlpha;
+
+                    if (visibility > config.tileUnseenAlpha){
+                        tile.alpha = config.tileSightAlpha;
+                        tile.renderable = true;
+                    } else {
+                        tile.alpha = config.tileVisitedAlpha;
+                    }
 
                     level._highTiles.push(tile.id);
+
+                    if (!level._shadows){
+                        setTimeout(function(){
+                            shadowTiles.set(level._highTiles, level.id);
+                        }, 5);
+                        level._shadows = true;
+                    }
                 });
             }
 

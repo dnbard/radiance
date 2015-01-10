@@ -170,7 +170,7 @@ define([
             } else {
                 var game = _.first(Phaser.GAMES),
                     sprite = sprite = spriteGroup.get(Sprites.CREATURE)
-                    .add(new Phaser.Sprite(game, this.x || 0, this.y || 0, val, this.frame || 0));
+                        .add(new Phaser.Sprite(game, this.x || 0, this.y || 0, val, this.frame || 0));
                 sprite.__type = Sprites.CREATURE;
                 sprite.anchor = {
                     x: 0.5,
@@ -242,8 +242,54 @@ define([
         },
     });
 
+    //renderable
+    factory.registerExtender('sprite_renderable', {
+        get: function(){
+            if (!this.sprite){
+                return this._renderable || null;
+            }
+
+            return _.isArray(this.sprite) ? this.sprite[0].renderable : this.sprite.renderable;
+        },
+        set: function(val){
+            if (!this.sprite){
+                this._renderable = val;
+                return;
+            }
+
+            if (_.isArray(this.sprite)){
+                _.each(this.sprite, function(sprite){
+                    sprite.renderable = val;
+                });
+            } else {
+                this.sprite.renderable = val;
+            }
+        },
+        name: 'renderable',
+        type: Extenders.GETSET
+    });
+
+    factory.registerMethod('addSprite', function(sprite){
+        var spriteName = typeof sprite === 'string' ? sprite : undefined,
+            game = _.first(Phaser.GAMES);
+
+        if (_.isArray(this.sprite)){
+            if (spriteName){
+                sprite = sprite = spriteGroup.get(Sprites.SHADOW)
+                    .add(new Phaser.Sprite(game, this.x || 0, this.y || 0, spriteName, this.frame || 0));
+            }
+
+            this.sprite.push(sprite);
+
+            return sprite;
+        } else {
+            throw new Error('Cannot add sprite ' + spriteName);
+        }
+    });
+
     factory.registerPreset('sprite', {
-        extend: [ 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'texture', 'sprite-alpha' ]
+        extend: [ 'sprite_x', 'sprite_y', 'sprite_gridX', 'sprite_gridY', 'texture', 'sprite-alpha'],
+        methods: [ 'addSprite' ]
     });
 
     factory.registerPreset('player', {
