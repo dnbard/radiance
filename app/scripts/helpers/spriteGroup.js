@@ -16,9 +16,6 @@ define([
         groups = {},
         initialized = false;
 
-    /*groups[enums.Sprites.DOODAD] = _.first(phaser.GAMES).add.group(undefined, enums.Sprites.DOODAD);
-    groups[enums.Sprites.FLOOR] = _.first(phaser.GAMES).add.group(undefined, enums.Sprites.FLOOR);*/
-
     function tryInitGroup(groupId){
         var groupConfig = _.find(config, function(gConfig){
             return gConfig.type === groupId;
@@ -43,7 +40,9 @@ define([
                     return configEntity.z;
                 }).each(function(configEntity){
                     console.log(configEntity.type);
-                    tryInitGroup(configEntity.type);
+                    if (!tryInitGroup(configEntity.type)){
+                        throw new Error('Sprite Layer ' + configEntity.type + ' not created');
+                    };
                 });
                 initialized = true;
             }
