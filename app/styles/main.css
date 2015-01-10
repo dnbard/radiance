@@ -1,6 +1,37 @@
+@font-face {
+    font-family: folkard;
+    src: url(../fonts/folkard_.ttf);
+}
+
+
 body{
     margin: 0;
     background: black;
     color: white;
     overflow: hidden;
+}
+
+#mainmenu__page{
+    text-align: center;
+}
+
+#mainmenu__page #logo__img{
+    margin: 0 auto;
+    display: block;
+    max-width: 1024px;
+    width: 80%;
+}
+
+button{
+    font-size: 25pt;
+    font-family: folkard;
+    background: transparent;
+    color: white;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+button:hover{
+    color: #e5c15d;
 }
