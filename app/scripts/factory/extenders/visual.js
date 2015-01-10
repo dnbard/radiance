@@ -4,8 +4,9 @@ define([
     'enums/extenders',
     'enums/sprites',
     'config/general',
-    'phaser'
-], function(_, factory, Extenders, Sprites, config, phaser){
+    'phaser',
+    'helpers/spriteGroup'
+], function(_, factory, Extenders, Sprites, config, phaser, spriteGroup){
     factory.registerExtender('sprite_gridX', {
         get: function(){
             return Math.round(this.x / config.tileWidth);
@@ -130,11 +131,22 @@ define([
         type: Extenders.GETSET,
         name: 'texture',
         set: function(val){
-            if (this.sprite){
-                throw new Error('Texture swapping are not implemented yet');
+            var game = _.first(Phaser.GAMES),
+                sprite;
+
+            if (_.isArray(this.sprite)){
+                sprite = spriteGroup.get(Sprites.DOODAD)
+                    .add(new Phaser.Sprite(game, this.x || 0, this.y || 0, val, this.frame || 0));
+                sprite.__type = Sprites.DOODAD;
+                sprite.anchor = {
+                    x: 0.5,
+                    y: 0.5
+                };
+
+                this.sprite.push(sprite);
             } else {
-                var game = _.first(Phaser.GAMES),
-                    sprite = game.add.sprite(this.x || 0, this.y || 0, val, this.frame || 0);
+                sprite = spriteGroup.get(Sprites.FLOOR)
+                    .add(new Phaser.Sprite(game, this.x || 0, this.y || 0, val, this.frame || 0));
                 sprite.__type = Sprites.FLOOR;
                 sprite.anchor = {
                     x: 0.5,
@@ -157,7 +169,8 @@ define([
                 throw new Error('Texture swapping are not implemented yet');
             } else {
                 var game = _.first(Phaser.GAMES),
-                    sprite = game.add.sprite(this.x || 0, this.y || 0, val, this.frame || 0);
+                    sprite = sprite = spriteGroup.get(Sprites.CREATURE)
+                    .add(new Phaser.Sprite(game, this.x || 0, this.y || 0, val, this.frame || 0));
                 sprite.__type = Sprites.CREATURE;
                 sprite.anchor = {
                     x: 0.5,
@@ -170,6 +183,28 @@ define([
                     enumerable: false
                 });
             }
+        }
+    });
+
+    factory.registerExtender('player-frame', {
+        type: Extenders.GETSET,
+        name: 'frame',
+        set: function(val){
+            var sprite;
+
+            if (!this.sprite){
+                throw new Error('Player sprite not found');
+            }
+
+            sprite = _.find(this.sprite, function(sp){
+                return sp.__type === Sprites.CREATURE;
+            });
+
+            if (!sprite){
+                throw new Error('Player sprite not found');
+            }
+
+            sprite.frame = val;
         }
     });
 
@@ -212,6 +247,6 @@ define([
     });
 
     factory.registerPreset('player', {
-        extend: [ 'player_x', 'player_y', 'sprite_gridX', 'sprite_gridY', 'player-texture', 'player-keyboard']
+        extend: [ 'player_x', 'player_y', 'sprite_gridX', 'sprite_gridY', 'player-texture', 'player-keyboard', 'player-frame']
     });
 });

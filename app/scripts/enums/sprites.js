@@ -1,4 +1,5 @@
 define({
     FLOOR: 'floor',
-    CREATURE: 'creature'
+    CREATURE: 'creature',
+    DOODAD: 'doodad'
 });

@@ -6,9 +6,10 @@ define([
     'pubsub',
     'enums',
     'config/general',
+    'generators/doodads',
 
     'formaters/levelTiles'
-], function(_, rot, phaser, Tiles, pubsub, enums, config){
+], function(_, rot, phaser, Tiles, pubsub, enums, config, Doodads){
     var generators = {};
 
     generators.basic = function(data){
@@ -35,6 +36,7 @@ define([
             tile.y = config.tileHeight * y;
 
             level.addTile(tile);
+            Doodads.create(tile);
 
             tilesCreated++;
 

@@ -12,7 +12,8 @@ define([
         default: {
             x: 480,
             y: 480,
-            texture: 'knight'
+            texture: 'player',
+            frame: 7
         }
     });
 });
