@@ -22,6 +22,32 @@ body{
     width: 80%;
 }
 
+#mainmenu__page .title{
+    color: #f35626;
+    background-image: -webkit-linear-gradient(92deg,#f35626,#feab3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+
+    display: block;
+    margin: 170px auto 25px auto;
+    padding: 30px 0 0 0;
+
+    font-size: 8rem;
+    font-family: folkard;
+    line-height: 1;
+}
+
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+
 button{
     font-size: 25pt;
     font-family: folkard;
